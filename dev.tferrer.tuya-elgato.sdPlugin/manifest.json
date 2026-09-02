@@ -57,7 +57,7 @@
 			"Controllers": ["Keypad"],
 			"States": [
 				{
-					"Image": "imgs/actions/curtain-control/key-open.gif",
+					"Image": "imgs/actions/curtain-control/key-open",
 					"TitleAlignment": "bottom"
 				}
 			]
