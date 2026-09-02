@@ -28,7 +28,7 @@ tuya-elgato/
 └── dev.tferrer.tuya-elgato.sdPlugin/       # o que o Stream Deck de fato carrega
     ├── manifest.json
     ├── bin/plugin.js                       # gerado por `npm run build` (git-ignored)
-    ├── imgs/                               # ícones placeholder gerados por script (trocar por arte final quando quiser)
+    ├── imgs/                               # ícones das ações — teclas de luz e cortina são GIFs animados
     └── ui/
         ├── common.js                       # protocolo WebSocket do Property Inspector
         ├── pi.css
@@ -61,6 +61,15 @@ npx @elgato/cli restart dev.tferrer.tuya-elgato
 ```
 
 O plugin já está linkado (`npx @elgato/cli link dev.tferrer.tuya-elgato.sdPlugin`) — isso cria um symlink em `~/Library/Application Support/com.elgato.StreamDeck/Plugins/`, então editar o código neste repo já reflete no Stream Deck após rebuild + restart.
+
+## Ícones animados (GIF)
+
+As teclas de **Light Toggle** (`key-on.gif`/`key-off.gif`) e **Curtain Control** (`key-open.gif`/`key-close.gif`/`key-stop.gif`) usam GIFs animados de 144×144px em vez de PNG estático:
+
+- Light Toggle declara os dois GIFs diretamente nos `States` do `manifest.json` (estado 0/1, alternado por `setState`).
+- Curtain Control é uma única ação com um só `State` no manifest (o comando — abrir/fechar/parar — é escolhido por botão no Property Inspector), então o GIF certo é aplicado em runtime via `action.setImage(...)` em `onWillAppear`/`onDidReceiveSettings` (ver `src/actions/curtain-control.ts`).
+
+Para trocar os ícones no futuro, basta substituir os arquivos em `dev.tferrer.tuya-elgato.sdPlugin/imgs/actions/*/key-*.gif` (mesmo nome/tamanho) e reiniciar o plugin — não precisa mexer no manifest nem no código.
 
 ## Observação
 
