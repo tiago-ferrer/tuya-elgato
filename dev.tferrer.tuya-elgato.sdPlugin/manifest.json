@@ -1,0 +1,66 @@
+{
+	"$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+	"Name": "Tuya Home Control",
+	"UUID": "dev.tferrer.tuya-elgato",
+	"Version": "0.1.0.0",
+	"Author": "tferrer",
+	"Description": "Controla luzes e cortinas Tuya (Smart Life) via Tuya Cloud API, funcionando mesmo com a máquina fora da rede local (ex.: em VPN).",
+	"Icon": "imgs/plugin/icon",
+	"CategoryIcon": "imgs/plugin/category",
+	"Category": "Tuya Home Control",
+	"CodePath": "bin/plugin.js",
+	"SDKVersion": 2,
+	"Software": {
+		"MinimumVersion": "6.5"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"Actions": [
+		{
+			"Name": "Light Toggle",
+			"UUID": "dev.tferrer.tuya-elgato.light-toggle",
+			"Tooltip": "Liga/desliga uma luz Tuya. Configure o Device ID no Property Inspector.",
+			"Icon": "imgs/actions/light-toggle/icon",
+			"PropertyInspectorPath": "ui/light-inspector.html",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "imgs/actions/light-toggle/key-off",
+					"TitleAlignment": "bottom",
+					"Name": "Off"
+				},
+				{
+					"Image": "imgs/actions/light-toggle/key-on",
+					"TitleAlignment": "bottom",
+					"Name": "On"
+				}
+			]
+		},
+		{
+			"Name": "Curtain Control",
+			"UUID": "dev.tferrer.tuya-elgato.curtain-control",
+			"Tooltip": "Envia um comando (abrir/fechar/parar) para um motor de cortina Tuya. Configure Device ID e comando no Property Inspector.",
+			"Icon": "imgs/actions/curtain-control/icon",
+			"PropertyInspectorPath": "ui/curtain-inspector.html",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "imgs/actions/curtain-control/key",
+					"TitleAlignment": "bottom"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "tuya-elgato",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plugin Elgato Stream Deck para controlar luzes e cortinas Tuya via Tuya Cloud API.",
+  "main": "dev.tferrer.tuya-elgato.sdPlugin/bin/plugin.js",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "tferrer",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@elgato/streamdeck": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3"
+  }
+}

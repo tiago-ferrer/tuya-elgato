@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Curtain Control</title>
+		<link rel="stylesheet" href="pi.css" />
+	</head>
+	<body>
+		<h2>Conta Tuya (compartilhada entre todos os botões)</h2>
+		<div class="row">
+			<label for="clientId">Client ID</label>
+			<input type="text" id="clientId" autocomplete="off" spellcheck="false" />
+		</div>
+		<div class="row">
+			<label for="clientSecret">Client Secret</label>
+			<input type="password" id="clientSecret" autocomplete="off" spellcheck="false" />
+		</div>
+		<div class="row">
+			<label for="region">Região (data center)</label>
+			<select id="region">
+				<option value="us-west">Western America (EUA/Canadá + Brasil pré-nov/2025)</option>
+				<option value="us-east">Eastern America (Brasil/México pós-nov/2025)</option>
+				<option value="eu">Central Europe</option>
+				<option value="eu-west">Western Europe</option>
+				<option value="cn">China</option>
+				<option value="in">India</option>
+			</select>
+		</div>
+		<div class="hint">
+			Do Tuya IoT Platform: Cloud Project &gt; Overview. Para o Brasil: contas Smart Life/Tuya Smart criadas antes de 25/11/2025 usam
+			Western America; contas mais novas usam Eastern America. Confirme no passo "Link Tuya App Account" se não tiver certeza.
+		</div>
+		<div class="row">
+			<div style="flex: 0 0 110px"></div>
+			<button id="testBtn" type="button" style="padding: 6px 10px">Testar conexão</button>
+		</div>
+		<div id="status" class="status"></div>
+
+		<h2>Este botão</h2>
+		<div class="row">
+			<label for="deviceId">Device ID</label>
+			<input type="text" id="deviceId" autocomplete="off" spellcheck="false" />
+		</div>
+		<div class="hint">ID do motor de cortina no Tuya IoT Platform.</div>
+		<div class="row">
+			<label for="command">Comando</label>
+			<select id="command">
+				<option value="open">Abrir</option>
+				<option value="close">Fechar</option>
+				<option value="stop">Parar</option>
+			</select>
+		</div>
+		<div class="hint">Crie um botão para cada comando (abrir / fechar / parar).</div>
+		<div class="row">
+			<label for="code">Code do DP</label>
+			<input type="text" id="code" autocomplete="off" spellcheck="false" placeholder="control" />
+		</div>
+		<div class="hint">
+			Deixe em branco para usar o padrão "control". Motores diferentes usam codes diferentes — confirme na aba Debug Device do Tuya IoT
+			Platform (ex.: alguns usam "percent_control" com valor numérico em vez de open/close/stop).
+		</div>
+
+		<script src="common.js"></script>
+		<script>
+			const clientIdEl = document.getElementById("clientId");
+			const clientSecretEl = document.getElementById("clientSecret");
+			const regionEl = document.getElementById("region");
+			const deviceIdEl = document.getElementById("deviceId");
+			const commandEl = document.getElementById("command");
+			const codeEl = document.getElementById("code");
+			const statusEl = document.getElementById("status");
+			const testBtn = document.getElementById("testBtn");
+
+			TuyaPI.onGlobalSettings((settings) => {
+				clientIdEl.value = settings.clientId || "";
+				clientSecretEl.value = settings.clientSecret || "";
+				regionEl.value = settings.region || "us-west";
+			});
+
+			TuyaPI.onSettings((settings) => {
+				deviceIdEl.value = settings.deviceId || "";
+				commandEl.value = settings.command || "open";
+				codeEl.value = settings.code || "";
+			});
+
+			function saveGlobal() {
+				TuyaPI.setGlobalSettings({
+					clientId: clientIdEl.value.trim(),
+					clientSecret: clientSecretEl.value.trim(),
+					region: regionEl.value
+				});
+			}
+
+			function saveLocal() {
+				TuyaPI.setSettings({
+					deviceId: deviceIdEl.value.trim(),
+					command: commandEl.value,
+					code: codeEl.value.trim()
+				});
+			}
+
+			[clientIdEl, clientSecretEl].forEach((el) => el.addEventListener("change", saveGlobal));
+			regionEl.addEventListener("change", saveGlobal);
+			[deviceIdEl, commandEl, codeEl].forEach((el) => el.addEventListener("change", saveLocal));
+
+			testBtn.addEventListener("click", () => {
+				statusEl.className = "status visible";
+				statusEl.textContent = "Testando...";
+				TuyaPI.sendToPlugin({ type: "testConnection" });
+			});
+
+			TuyaPI.onPluginMessage((msg) => {
+				if (msg.type !== "testConnectionResult") return;
+				statusEl.className = "status visible " + (msg.success ? "ok" : "error");
+				statusEl.textContent = msg.success ? "✓ Conectado com sucesso." : "✗ " + (msg.message || "Falha ao conectar.");
+			});
+		</script>
+	</body>
+</html>

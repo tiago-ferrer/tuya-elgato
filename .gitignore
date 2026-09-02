@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dev.tferrer.tuya-elgato.sdPlugin/bin/
+dev.tferrer.tuya-elgato.sdPlugin/logs/
+*.streamDeckPlugin
+.DS_Store
+
+# Nunca versionar credenciais reais caso alguém crie um arquivo local de teste
+devices.local.json
+.env

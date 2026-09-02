@@ -1,0 +1,83 @@
+/* Estilo mínimo inspirado no Property Inspector clássico do Stream Deck.
+   Sem CDN de propósito: precisa abrir mesmo offline. */
+body {
+	margin: 0;
+	padding: 8px 12px 16px;
+	background: #2d2d2d;
+	color: #d8d8d8;
+	font-family: -apple-system, "Segoe UI", sans-serif;
+	font-size: 12px;
+}
+
+h2 {
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #9a9a9a;
+	margin: 18px 0 8px;
+	border-bottom: 1px solid #444;
+	padding-bottom: 4px;
+}
+
+h2:first-of-type {
+	margin-top: 4px;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 8px;
+	gap: 8px;
+}
+
+.row label {
+	flex: 0 0 110px;
+	color: #b6b6b6;
+}
+
+.row input,
+.row select {
+	flex: 1 1 auto;
+	background: #1f1f1f;
+	border: 1px solid #444;
+	color: #eaeaea;
+	border-radius: 4px;
+	padding: 5px 6px;
+	font-size: 12px;
+}
+
+.row input:focus,
+.row select:focus {
+	outline: none;
+	border-color: #4d90fe;
+}
+
+.hint {
+	font-size: 10px;
+	color: #808080;
+	margin: -4px 0 10px 118px;
+	line-height: 1.4;
+}
+
+.status {
+	font-size: 10px;
+	margin-top: 10px;
+	padding: 6px 8px;
+	border-radius: 4px;
+	background: #1f1f1f;
+	color: #9a9a9a;
+	display: none;
+}
+
+.status.visible {
+	display: block;
+}
+
+.status.ok {
+	color: #6fcf97;
+}
+
+.status.error {
+	color: #eb5757;
+}
