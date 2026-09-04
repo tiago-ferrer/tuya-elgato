@@ -34,17 +34,12 @@
 			"Tooltip": "Liga/desliga uma luz Tuya. Configure o Device ID no Property Inspector.",
 			"Icon": "imgs/actions/light-toggle/icon",
 			"PropertyInspectorPath": "ui/light-inspector.html",
-			"Controllers": ["Keypad"],
+			"Controllers": [
+				"Keypad"
+			],
 			"States": [
 				{
-					"Image": "imgs/actions/light-toggle/key-off",
-					"TitleAlignment": "bottom",
-					"Name": "Off"
-				},
-				{
-					"Image": "imgs/actions/light-toggle/key-on",
-					"TitleAlignment": "bottom",
-					"Name": "On"
+					"Image": "imgs/actions/light-toggle/icon"
 				}
 			]
 		},
@@ -54,11 +49,12 @@
 			"Tooltip": "Envia um comando (abrir/fechar/parar) para um motor de cortina Tuya. Configure Device ID e comando no Property Inspector.",
 			"Icon": "imgs/actions/curtain-control/icon",
 			"PropertyInspectorPath": "ui/curtain-inspector.html",
-			"Controllers": ["Keypad"],
+			"Controllers": [
+				"Keypad"
+			],
 			"States": [
 				{
-					"Image": "imgs/actions/curtain-control/key-open",
-					"TitleAlignment": "bottom"
+					"Image": "imgs/actions/curtain-control/icon"
 				}
 			]
 		}

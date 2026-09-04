@@ -59,6 +59,14 @@
 			Deixe em branco para usar o padrão "control". Motores diferentes usam codes diferentes — confirme na aba Debug Device do Tuya IoT
 			Platform (ex.: alguns usam "percent_control" com valor numérico em vez de open/close/stop).
 		</div>
+		<div class="row">
+			<label for="reverse">Reverse</label>
+			<input type="checkbox" id="reverse" />
+		</div>
+		<div class="hint">
+			Ative se o motor foi instalado ao contrário. O ícone do botão continua mostrando o comando configurado acima (ex.: "Abrir"),
+			mas o comando de fato enviado à Tuya sai invertido (abrir↔fechar). Não afeta o botão "Parar".
+		</div>
 
 		<script src="common.js"></script>
 		<script>
@@ -68,6 +76,7 @@
 			const deviceIdEl = document.getElementById("deviceId");
 			const commandEl = document.getElementById("command");
 			const codeEl = document.getElementById("code");
+			const reverseEl = document.getElementById("reverse");
 			const statusEl = document.getElementById("status");
 			const testBtn = document.getElementById("testBtn");
 
@@ -81,6 +90,7 @@
 				deviceIdEl.value = settings.deviceId || "";
 				commandEl.value = settings.command || "open";
 				codeEl.value = settings.code || "";
+				reverseEl.checked = Boolean(settings.reverse);
 			});
 
 			function saveGlobal() {
@@ -95,13 +105,14 @@
 				TuyaPI.setSettings({
 					deviceId: deviceIdEl.value.trim(),
 					command: commandEl.value,
-					code: codeEl.value.trim()
+					code: codeEl.value.trim(),
+					reverse: reverseEl.checked
 				});
 			}
 
 			[clientIdEl, clientSecretEl].forEach((el) => el.addEventListener("change", saveGlobal));
 			regionEl.addEventListener("change", saveGlobal);
-			[deviceIdEl, commandEl, codeEl].forEach((el) => el.addEventListener("change", saveLocal));
+			[deviceIdEl, commandEl, codeEl, reverseEl].forEach((el) => el.addEventListener("change", saveLocal));
 
 			testBtn.addEventListener("click", () => {
 				statusEl.className = "status visible";
